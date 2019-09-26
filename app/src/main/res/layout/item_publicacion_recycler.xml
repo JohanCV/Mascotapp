@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/cardview"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/margin_carview_publicacion">
+
+    <LinearLayout
+        android:id="@+id/layout_cabecera"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/selectableItemBackground"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="@dimen/margin_carview_publicacion">
+
+
+
+        <TextView
+            android:id="@+id/txtNombreMascota"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_margin="@dimen/text_margin_publicacion"
+            android:textSize="@dimen/text_size_titulo"
+            android:text="Nombre" />
+
+
+
+        <TextView
+            android:id="@+id/txtFechaPerdida"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_margin="@dimen/text_margin_publicacion"
+            android:textSize="@dimen/text_size_publicacion"
+            android:text="Fecha Perdida" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layout_separador"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="60dp"
+        android:orientation="horizontal">
+
+        <View
+            android:id="@+id/viewLine"
+            android:layout_width="wrap_content"
+            android:layout_height="2dp"
+            android:layout_below="@+id/layout_cabecera"
+            android:layout_weight="1"
+            android:background="@color/colorAccent" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layout_cuerpo"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="70dp"
+        android:layout_marginBottom="5dp"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/imgMascota"
+                android:layout_width="120dp"
+                android:layout_height="80dp"
+                android:scaleType="centerCrop"
+                android:layout_marginLeft="10dp"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/txtRazaMascota"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/text_margin_publicacion"
+                android:text="Raza:"
+                android:textSize="@dimen/text_size_publicacion" />
+
+            <TextView
+                android:id="@+id/txtTeleMascota"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/text_margin_publicacion"
+                android:text="Telefono:"
+                android:textSize="@dimen/text_size_publicacion" />
+
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/txtInpRazaMascota"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/text_margin_publicacion"
+                android:text="Raza:"
+                android:textSize="@dimen/text_size_publicacion" />
+
+            <TextView
+                android:id="@+id/txtInpTeleMascota"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/text_margin_publicacion"
+                android:text="Telefono:"
+                android:textSize="@dimen/text_size_publicacion" />
+
+
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

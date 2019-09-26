@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">Mascotapp</string>
+
+    <!-- menu bottom navigation view -->
+    <string name="menu_home">Inicio</string>
+    <string name="menu_localizado">Localizado</string>
+    <string name="menu_encontrar">Encontrar</string>
+    <string name="menu_mascota">Mi Mascota</string>
+    <string name="menu_perfil">Perfil</string>
+
+    <!-- menu perfil del usuario -->
+    <string name="menu_perfil_edit">Editar</string>
+    <string name="menu_perfil_eliminar">Eliminar</string>
+    <string name="menu_perfil_salir">Cerrar Sesion</string>
+
+    <!-- login -->
+    <string name="bienvenido">Bienvenid@</string>
+    <string name="user">Usuario</string>
+    <string name="password">Contraseña</string>
+    <string name="login">Iniciar Sesión</string>
+
+    <string name="formato_fecha">dd/mm/yyyy</string>
+</resources>

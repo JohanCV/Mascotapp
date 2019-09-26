@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="margin_fab">10dp</dimen>
+    <dimen name="dimen_magin_editext">10dp</dimen>
+    <dimen name="margin_carview_publicacion">10dp</dimen>
+
+    <dimen name="text_size_titulo">14sp</dimen>
+    <dimen name="text_size_publicacion">14sp</dimen>
+    <dimen name="text_margin_publicacion">10sp</dimen>
+
+    <dimen name="with_image">50dp</dimen>
+    <dimen name="height_image">50dp</dimen>
+
+    <dimen name="margin_popup">20dp</dimen>
+    <dimen name="padding_layout">20dp</dimen>
+</resources>
