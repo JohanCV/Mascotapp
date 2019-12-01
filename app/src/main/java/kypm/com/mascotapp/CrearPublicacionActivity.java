@@ -1,5 +1,6 @@
 package kypm.com.mascotapp;
 
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -31,6 +32,7 @@ import java.util.List;
 
 import io.github.wangeason.multiphotopicker.utils.PhotoPickerIntent;
 import kypm.com.mascotapp.modelo.Mascota;
+import kypm.com.mascotapp.modelo.Publicacion;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -60,13 +62,17 @@ public class CrearPublicacionActivity extends AppCompatActivity {
     private Button btn_publicar;
     private Spinner spinner;
     private ImageView mapa;
-    private ImageButton fotos;
+    private ImageButton agregarfotos;
+    Uri selectedImage;
+
     private int posicion;
     private static final int PICK_IMAGE = 100;
-    Uri selectedImage;
+
     List<Mascota> mascotas;
     private Bundle datosmapa;
     private Double latitud,longitud;
+
+    TextView nombreImagen;
 
     public CrearPublicacionActivity() {
     }
@@ -84,8 +90,12 @@ public class CrearPublicacionActivity extends AppCompatActivity {
     private void findElemente() {
         regresar =(ImageView) findViewById(R.id.regresarPerfilEditar);
         nombreCabecera = (TextView) findViewById(R.id.perfilUsuarioNombreEditar);
+
+        nombreImagen = (TextView) findViewById(R.id.textView4);
+        //img para agregar fotos de mi galeria
+        agregarfotos=(ImageButton) findViewById(R.id.imb_agregar_imagen);
+
         btn_publicar = (Button) findViewById(R.id.btn_publicar);
-        fotos=(ImageButton) findViewById(R.id.imb_agregar_imagen);
 
     }
 
@@ -140,18 +150,18 @@ public class CrearPublicacionActivity extends AppCompatActivity {
             }
         });
         */
-        fotos.setOnClickListener(new View.OnClickListener() {
+        agregarfotos.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 AlertDialog.Builder myAlertDialog = new AlertDialog.Builder(
                         CrearPublicacionActivity.this);
-                myAlertDialog.setTitle("Subir fotos");
+                myAlertDialog.setTitle("Agregar foto");
                 //myAlertDialog.setMessage("¿Cómo quieres configurar tu imagen?");
 
                 myAlertDialog.setPositiveButton("Galería",
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface arg0, int arg1) {
-                                Intent intent=new Intent(Intent.ACTION_PICK);
+                                Intent intent=new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
                                 // Sets the type as image/*. This ensures only components of type image are selected
                                 intent.setType("image/*");
                                 //We pass an extra array with the accepted mime types. This will ensure only components with these MIME types as targeted.
@@ -183,21 +193,22 @@ public class CrearPublicacionActivity extends AppCompatActivity {
                 .baseUrl(url)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
-        ServicioPublicacion serviciopublicacion = retrofit.create(ServicioPublicacion.class);
+        Servicios serviciopublicacion = retrofit.create(Servicios.class);
 
-        Call<Publicacion> registrar_publicacion = serviciopublicacion.registrar_publicacion(
+        Call<Publicacion> registrar_publicacion = serviciopublicacion.subirFoto(
                 Double.parseDouble(txt_recompensa.getText().toString()),
                 txt_Fecha_perdida.getText().toString(),
-                mascotas.get(posicion).getId(),
+                mascotas.get(posicion).getFoto(),
                 latitud,
                 longitud);
+
         registrar_publicacion.enqueue(new Callback<Publicacion>() {
             @Override
             public void onResponse(Call<Publicacion> call, Response<Publicacion> response) {
                 switch (response.code()) {
                     case 201:
                         Publicacion p = response.body();
-                        Log.e("publicar", "" + p.getRecompensa());
+                        //Log.e("publicar", "" + p.getRecompensa());
                         SubirFoto();
                         break;
                     default:
@@ -211,8 +222,17 @@ public class CrearPublicacionActivity extends AppCompatActivity {
             }
         });*/
 
-        Intent regresarHome = new Intent(getApplicationContext(), MainActivity.class);
-        startActivity(regresarHome);
+
+            File file = new File(getRealPathFromURI(selectedImage));
+            String nombreImg = file.getName().toString();
+            // Obtiene el Nombre y el Directorio Absoluto y los Muestra
+            //nombreImagen.setText("Nombre: " + file.getName()+ "Dir. Absoluto: " + file.getAbsolutePath());
+            nombreImagen.setText("Nombre: " + nombreImg);
+
+            Intent BuscarHome = new Intent(getApplicationContext(), MainActivity.class);
+            BuscarHome.putExtra("nombreImagen",nombreImg);
+            setResult(Activity.RESULT_OK,BuscarHome);
+            finish();
     }
 
     private void obtenerFecha() {
@@ -292,11 +312,11 @@ public class CrearPublicacionActivity extends AppCompatActivity {
     }
 
     public void SubirFoto(){
-        /*Retrofit retrofit = new Retrofit.Builder()
+        Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(url)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
-        ServicioMascota Serviciopublicacion = retrofit.create(ServicioMascota.class);
+        Servicios Serviciopublicacion = retrofit.create(Servicios.class);
         File file = new File(getRealPathFromURI(selectedImage));
 
         RequestBody reqFile = RequestBody.create(MediaType.parse("image/*"), file);
@@ -304,7 +324,7 @@ public class CrearPublicacionActivity extends AppCompatActivity {
         RequestBody mascota = RequestBody.create(MediaType.parse("text/plain"),"1");
 
         //
-        Call<ResponseBody> call = Serviciopublicacion.subirFotoMascota( body,  mascota);
+        Call<ResponseBody> call = Serviciopublicacion.subirFoto( body,  mascota);
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -320,7 +340,7 @@ public class CrearPublicacionActivity extends AppCompatActivity {
             public void onFailure(Call<ResponseBody> call, Throwable t) {
                 Log.e("Error Appatas", t.getMessage());
             }
-        });*/
+        });
     }
 
     public void habilitar_recompensa() {
@@ -343,11 +363,11 @@ public class CrearPublicacionActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        /*if (requestCode == 1 && resultCode == RESULT_OK) {
+        if (requestCode == 1 && resultCode == RESULT_OK) {
             selectedImage = data.getData();
-            fotos.setImageURI(selectedImage);
+            agregarfotos.setImageURI(selectedImage);
         }
-        if (requestCode == 2) {
+        /*if (requestCode == 2) {
             if(resultCode == MapaActivity.RESULT_OK){
                 latitud=data.getDoubleExtra("latitud",0);
                 longitud=data.getDoubleExtra("longitud", 0);

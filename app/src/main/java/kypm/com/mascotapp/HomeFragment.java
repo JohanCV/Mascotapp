@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -36,6 +37,8 @@ public class HomeFragment extends Fragment {
     private List<Publicacion> listFotos = new ArrayList<>();
 
     private FloatingActionButton floatingActionButton;
+
+
 
 
     @Nullable
@@ -129,7 +132,10 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent intentcrearpublicacion = new Intent(getContext(), CrearPublicacionActivity.class);
-                startActivity(intentcrearpublicacion);
+                //startActivity(intentcrearpublicacion);
+                startActivityForResult(intentcrearpublicacion, 1);
+
+
             }
         });
     }

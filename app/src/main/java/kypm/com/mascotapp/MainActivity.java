@@ -25,6 +25,9 @@ public class MainActivity extends AppCompatActivity {
     private ViewPager viewPager;
     private TabLayout tabLayout;
     private TextView nombreCabecera;
+
+    TextView recuperar_nombreimg;
+    //Bundle parametros;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,6 +45,9 @@ public class MainActivity extends AppCompatActivity {
         bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottomNavigationView);
         viewPager = (ViewPager) findViewById(R.id.view_pager_container);
         tabLayout = (TabLayout) findViewById(R.id.tabs);
+
+        recuperar_nombreimg = findViewById(R.id.txt_nombreimg);
+
     }
 
     private void setUpViewPager(){
@@ -66,5 +72,13 @@ public class MainActivity extends AppCompatActivity {
 
     private void events() {
         //nombreCabecera.setText("Buscar por Imagen");
+
+        /*if (parametros != null){
+            recuperar_nombreimg.setText("");
+        }else {
+            String recuperandoImg = parametros.getString("nombreImagen");
+            recuperar_nombreimg.setText(recuperandoImg);
+        }*/
+
     }
 }
