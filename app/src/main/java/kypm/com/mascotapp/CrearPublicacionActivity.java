@@ -42,6 +42,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class CrearPublicacionActivity extends AppCompatActivity {
+    String url = "http://gohan1992.pythonanywhere.com/";
     private ImageView regresar;
     private TextView nombreCabecera;
     private CheckBox chk_recompensa;
@@ -83,8 +84,6 @@ public class CrearPublicacionActivity extends AppCompatActivity {
     private void findElemente() {
         regresar =(ImageView) findViewById(R.id.regresarPerfilEditar);
         nombreCabecera = (TextView) findViewById(R.id.perfilUsuarioNombreEditar);
-        ib_ObtenerFecha = (ImageButton) findViewById(R.id.ib_obtener_fecha);
-        txt_Fecha_perdida = (EditText) findViewById(R.id.txt_fecha_perdida);
         btn_publicar = (Button) findViewById(R.id.btn_publicar);
         fotos=(ImageButton) findViewById(R.id.imb_agregar_imagen);
 
@@ -105,12 +104,12 @@ public class CrearPublicacionActivity extends AppCompatActivity {
         Listar_mascota_usuario();
 
 
-        ib_ObtenerFecha.setOnClickListener(new View.OnClickListener() {
+        /*ib_ObtenerFecha.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 obtenerFecha();
             }
-        });
+        });*/
 
         btn_publicar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -180,7 +179,7 @@ public class CrearPublicacionActivity extends AppCompatActivity {
 
 
     private void Crear_publicacion() {
-       /* Retrofit retrofit = new Retrofit.Builder()
+        /*Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(url)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
@@ -280,16 +279,18 @@ public class CrearPublicacionActivity extends AppCompatActivity {
             }
         });*/
     }
-public void MultiPhoto(){
-    PhotoPickerIntent intent = new PhotoPickerIntent(CrearPublicacionActivity.this);
-    intent.setPhotoCount(3);
-    intent.setShowCamera(true);
-    intent.setShowGif(true);
-    intent.setMultiChoose(true);
-    //https://github.com/wangeason/MultiPhotoPicker
-    //https://github.com/nileshpambhar/MultiPhotoPicker
-    //startActivityForResult(intent, REQUEST_CODE);
-}
+
+    public void MultiPhoto(){
+        PhotoPickerIntent intent = new PhotoPickerIntent(CrearPublicacionActivity.this);
+        intent.setPhotoCount(3);
+        intent.setShowCamera(true);
+        intent.setShowGif(true);
+        intent.setMultiChoose(true);
+        //https://github.com/wangeason/MultiPhotoPicker
+        //https://github.com/nileshpambhar/MultiPhotoPicker
+        //startActivityForResult(intent, REQUEST_CODE);
+    }
+
     public void SubirFoto(){
     /*    Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(url)

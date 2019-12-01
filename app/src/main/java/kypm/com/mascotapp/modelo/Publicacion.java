@@ -4,59 +4,69 @@ import android.graphics.drawable.Drawable;
 
 public class Publicacion {
 
-    //servicio atributos
-    private String Nombre;
-    private String fecha_perdida;
-    private String Raza;
-    private String Telefono;
-    private int img;
+    int id;
+    String nombre;
+    String direccion;
+    Float precio_hora;
+    int cantidad_canchas;
+    String foto;
 
+    public Publicacion(int id, String nombre, String direccion, Float precio_hora, int cantidad_canchas,String foto) {
+        this.id = id;
+        this.nombre = nombre;
+        this.direccion = direccion;
+        this.precio_hora = precio_hora;
+        this.cantidad_canchas = cantidad_canchas;
+        this.foto=foto;
+    }
 
-    public Publicacion(String nombre, String fecha_perdida, String raza, String telefono, int img) {
-        Nombre = nombre;
-        this.fecha_perdida = fecha_perdida;
-        Raza = raza;
-        Telefono = telefono;
-        this.img = img;
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getNombre() {
-        return Nombre;
+        return nombre;
     }
 
     public void setNombre(String nombre) {
-        Nombre = nombre;
+        this.nombre = nombre;
     }
 
-    public String getFecha_perdida() {
-        return fecha_perdida;
+    public String getDireccion() {
+        return direccion;
     }
 
-    public void setFecha_perdida(String fecha_perdida) {
-        this.fecha_perdida = fecha_perdida;
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
     }
 
-    public String getRaza() {
-        return Raza;
+    public Float getPrecio_hora() {
+        return precio_hora;
     }
 
-    public void setRaza(String raza) {
-        Raza = raza;
+    public void setPrecio_hora(Float precio_hora) {
+        this.precio_hora = precio_hora;
     }
 
-    public String getTelefono() {
-        return Telefono;
+    public int getCantidad_canchas() {
+        return cantidad_canchas;
     }
 
-    public void setTelefono(String telefono) {
-        Telefono = telefono;
+    public void setCantidad_canchas(int cantidad_canchas) {
+        this.cantidad_canchas = cantidad_canchas;
     }
 
-    public int getImg() {
-        return img;
+    public String getFoto() {
+        return foto;
     }
 
-    public void setImg(int img) {
-        this.img = img;
+    public void setFoto(String foto) {
+        this.foto = foto;
     }
+
+
 }

@@ -41,7 +41,6 @@ public class MainActivity extends AppCompatActivity {
 
     private void findElemente() {
         bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottomNavigationView);
-        nombreCabecera = (TextView) findViewById(R.id.perfilUsuarioNombre);
         viewPager = (ViewPager) findViewById(R.id.view_pager_container);
         tabLayout = (TabLayout) findViewById(R.id.tabs);
     }
@@ -67,6 +66,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void events() {
-        nombreCabecera.setText("Buscar por Imagen");
+        //nombreCabecera.setText("Buscar por Imagen");
     }
 }

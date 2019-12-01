@@ -1,7 +1,23 @@
 package kypm.com.mascotapp.modelo;
 
 public class Mascota {
-    String nombre;
+
+    String foto;
+
+    public Mascota(String foto) {
+        this.foto = foto;
+    }
+
+    public String getFoto() {
+        return foto;
+    }
+
+    public void setFoto(String foto) {
+        this.foto = foto;
+    }
+
+
+    /*String nombre;
     String raza;
     String observaciones;
 
@@ -33,5 +49,5 @@ public class Mascota {
 
     public void setObservaciones(String observaciones) {
         this.observaciones = observaciones;
-    }
+    }*/
 }

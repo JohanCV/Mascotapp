@@ -10,6 +10,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+
 import java.util.List;
 
 import kypm.com.mascotapp.R;
@@ -35,11 +37,7 @@ public class PublicacionAdaptador extends RecyclerView.Adapter<PublicacionAdapta
     @Override
     public void onBindViewHolder(@NonNull ViewHolderPublicacion viewHolderPublicacion, int position) {
 
-        viewHolderPublicacion.nombreMascota.setText(listPublicacion.get(position).getNombre().toString());
-        viewHolderPublicacion.fechaperdida.setText(listPublicacion.get(position).getFecha_perdida().toString());
-        viewHolderPublicacion.raza.setText(listPublicacion.get(position).getRaza().toString());
-        viewHolderPublicacion.telefono.setText(listPublicacion.get(position).getTelefono().toString());
-        viewHolderPublicacion.imgMascota.setImageResource(listPublicacion.get(position).getImg());
+        Glide.with(context).load(listPublicacion.get(position).getFoto()).into(viewHolderPublicacion.imgMascotas);
 
     }
 
@@ -50,18 +48,13 @@ public class PublicacionAdaptador extends RecyclerView.Adapter<PublicacionAdapta
 
     public class ViewHolderPublicacion extends RecyclerView.ViewHolder {
 
-        TextView nombreMascota,  fechaperdida, raza, telefono;
-        ImageView imgMascota;
+        //TextView nombreMascota,  fechaperdida, raza, telefono;
+        ImageView imgMascotas;
 
         public ViewHolderPublicacion(@NonNull View itemView) {
             super(itemView);
 
-            nombreMascota = itemView.findViewById(R.id.txtNombreMascota);
-            fechaperdida = itemView.findViewById(R.id.txtFechaPerdida);
-            raza = itemView.findViewById(R.id.txtInpRazaMascota);
-            telefono = itemView.findViewById(R.id.txtInpTeleMascota);
-
-            imgMascota = itemView.findViewById(R.id.imgMascota);
+            imgMascotas = itemView.findViewById(R.id.imgMascota);
         }
     }
 }

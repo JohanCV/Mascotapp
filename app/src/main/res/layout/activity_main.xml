@@ -17,21 +17,13 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <!-- top toolbar -->
-        <RelativeLayout
-            android:id="@+id/relativeLayoutTop"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
 
-            <include layout="@layout/layout_top_perfil"/>
-
-        </RelativeLayout>
 
         <!-- body -->
         <RelativeLayout
             android:id="@+id/relativeLauoutBody"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@id/relativeLayoutTop">
+            android:layout_height="match_parent">
 
             <include layout="@layout/layout_body_viewpager"/>
 

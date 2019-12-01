@@ -6,7 +6,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -17,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import kypm.com.mascotapp.adaptador.PublicacionAdaptador;
@@ -28,10 +28,13 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class HomeFragment extends Fragment {
-    //public static String url = "http://proyectosmovil.pythonanywhere.com";
+
+    String url = "http://gohan1992.pythonanywhere.com/";
+
     private RecyclerView recyclerView;
     private PublicacionAdaptador publicacionAdaptador;
-    private List<Publicacion> listPublish = new ArrayList<>();
+    private List<Publicacion> listFotos = new ArrayList<>();
+
     private FloatingActionButton floatingActionButton;
 
 
@@ -43,11 +46,43 @@ public class HomeFragment extends Fragment {
         recyclerView = view.findViewById(R.id.rv_publicaciones);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        llenarListaBaseDatos();
-        publicacionAdaptador = new PublicacionAdaptador(getContext(),listPublish);
-        recyclerView.setAdapter(publicacionAdaptador);
-        floatingActionButton = view.findViewById(R.id.floatingActionButtonPublicar);
+        //llenarListaBaseDatos();
 
+        //publicacionAdaptador = new PublicacionAdaptador(getContext(),listFotos);
+        //recyclerView.setAdapter(publicacionAdaptador);
+
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(url)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        Servicios servicioListarFotos = retrofit.create(Servicios.class);
+        Call<List<Publicacion>> call = servicioListarFotos.listarFotos();
+
+        call.enqueue(new Callback<List<Publicacion>>() {
+                         @Override
+                         public void onResponse(Call<List<Publicacion>> call, Response<List<Publicacion>> response) {
+                             Log.e("Codigo: ", response.code() + "");
+
+                             switch (response.code()) {
+                                 case 200:
+
+                                     List<Publicacion> publicaciones = response.body();
+                                     publicacionAdaptador = new PublicacionAdaptador(getContext(),publicaciones);
+                                     recyclerView.setAdapter(publicacionAdaptador);
+
+                                     break;
+                             }
+                         }
+
+                         @Override
+                         public void onFailure(Call<List<Publicacion>> call, Throwable t) {
+                             Log.e("Error App: ", t.getMessage());
+                         }
+                     });
+
+        floatingActionButton = view.findViewById(R.id.floatingActionButtonPublicar);
 
         coneccion();
         events();
@@ -104,10 +139,10 @@ public class HomeFragment extends Fragment {
     }
 
     private void llenarListaBaseDatos(){
-        listPublish.add(new Publicacion("Firulais","22/06/19","husky-siberiano","999888111",R.drawable.ic_menu_mascota));
+        /*listPublish.add(new Publicacion("Firulais","22/06/19","husky-siberiano","999888111",R.drawable.ic_menu_mascota));
 
         listPublish.add(new Publicacion("Firulais","22/06/19","Rodwaller","999888111",R.drawable.ic_menu_mascota));
-        listPublish.add(new Publicacion("Firulais","22/06/19","pequines","999888111",R.drawable.ic_menu_mascota));
+        listPublish.add(new Publicacion("Firulais","22/06/19","pequines","999888111",R.drawable.ic_menu_mascota));*/
     }
 
 }
