@@ -109,7 +109,7 @@ public class CrearPublicacionActivity extends AppCompatActivity {
             }
         });
 
-        nombreCabecera.setText("Crear Mi Publicación");
+        nombreCabecera.setText("Buscar");
         habilitar_recompensa();
         Listar_mascota_usuario();
 
@@ -189,6 +189,20 @@ public class CrearPublicacionActivity extends AppCompatActivity {
 
 
     private void Crear_publicacion() {
+
+        File file = new File(getRealPathFromURI(selectedImage));
+        String nombreImg = file.getName().toString();
+
+        // Obtiene el Nombre y el Directorio Absoluto y los Muestra
+        //nombreImagen.setText("Nombre: " + file.getName()+ "Dir. Absoluto: " + file.getAbsolutePath());
+        nombreImagen.setText("Nombre: " + nombreImg);
+
+        Intent BuscarHome = new Intent(getApplicationContext(), ResultadoBusquedaActivity.class);
+        BuscarHome.putExtra("sendNombreImagen",nombreImg);
+        //setResult(Activity.RESULT_OK,BuscarHome);
+        //finish();
+        startActivity(BuscarHome);
+
         /*Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(url)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -221,18 +235,6 @@ public class CrearPublicacionActivity extends AppCompatActivity {
                 Log.e("Error publicacion", t.getMessage());
             }
         });*/
-
-
-            File file = new File(getRealPathFromURI(selectedImage));
-            String nombreImg = file.getName().toString();
-            // Obtiene el Nombre y el Directorio Absoluto y los Muestra
-            //nombreImagen.setText("Nombre: " + file.getName()+ "Dir. Absoluto: " + file.getAbsolutePath());
-            nombreImagen.setText("Nombre: " + nombreImg);
-
-            Intent BuscarHome = new Intent(getApplicationContext(), MainActivity.class);
-            BuscarHome.putExtra("nombreImagen",nombreImg);
-            setResult(Activity.RESULT_OK,BuscarHome);
-            finish();
     }
 
     private void obtenerFecha() {

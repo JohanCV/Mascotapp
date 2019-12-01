@@ -8,10 +8,8 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_publicaciones"
         android:layout_width="match_parent"
-        android:layout_height="637dp"
-        android:layout_alignParentTop="true"
+        android:layout_height="685dp"
         android:layout_alignParentBottom="true"
-        android:layout_marginTop="48dp"
         android:layout_marginBottom="47dp"
         android:orientation="horizontal" />
 
@@ -29,10 +27,6 @@
         android:focusable="false"
         app:srcCompat="@drawable/ic_action_publish" />
 
-    <TextView
-        android:id="@+id/txt_nombreimg"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TextView" />
+
 
 </RelativeLayout>

@@ -45,9 +45,6 @@ public class MainActivity extends AppCompatActivity {
         bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottomNavigationView);
         viewPager = (ViewPager) findViewById(R.id.view_pager_container);
         tabLayout = (TabLayout) findViewById(R.id.tabs);
-
-        recuperar_nombreimg = findViewById(R.id.txt_nombreimg);
-
     }
 
     private void setUpViewPager(){
