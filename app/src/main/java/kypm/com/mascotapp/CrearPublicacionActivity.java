@@ -292,7 +292,7 @@ public class CrearPublicacionActivity extends AppCompatActivity {
     }
 
     public void SubirFoto(){
-    /*    Retrofit retrofit = new Retrofit.Builder()
+        /*Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(url)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
