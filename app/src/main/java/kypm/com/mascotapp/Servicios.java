@@ -13,9 +13,10 @@ import retrofit2.http.POST;
 import retrofit2.http.Part;
 
 public interface Servicios {
-    @GET("servicios/canchas/")
+    @GET("servicios/mascotas/")
     Call<List<Publicacion>> listarFotos();
-
+    @GET("servicios/mascotas/{foto}")
+    Call<List<Publicacion>> listardog();
     @Multipart
     @POST("/servicios/foto_mascota/")
     Call<ResponseBody> subirFoto(@Part MultipartBody.Part image, @Part("mascota") RequestBody mascota);

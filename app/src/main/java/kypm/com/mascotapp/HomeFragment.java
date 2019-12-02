@@ -31,7 +31,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class HomeFragment extends Fragment {
 
-    String url = "http://gohan1992.pythonanywhere.com/";
+    String url = "http://127.0.0.1/";
 
     private RecyclerView recyclerView;
     private PublicacionAdaptador publicacionAdaptador;
@@ -47,9 +47,7 @@ public class HomeFragment extends Fragment {
         recyclerView = view.findViewById(R.id.rv_publicaciones);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        llenarListaBaseDatos();
-
-        publicacionAdaptador = new PublicacionAdaptador(getContext(),llenarListaBaseDatos());
+        publicacionAdaptador = new PublicacionAdaptador(getContext(),listado());
         recyclerView.setAdapter(publicacionAdaptador);
 
         floatingActionButton = view.findViewById(R.id.floatingActionButtonPublicar);
@@ -78,9 +76,6 @@ public class HomeFragment extends Fragment {
                     case 200:
 
                         List<Publicacion> publicaciones = response.body();
-                        //publicacionAdaptador = new PublicacionAdaptador(getContext(),publicaciones);
-                        //recyclerView.setAdapter(publicacionAdaptador);
-
                         break;
                 }
             }
@@ -109,7 +104,7 @@ public class HomeFragment extends Fragment {
 
     }
 
-    private  ArrayList<Publicacion> llenarListaBaseDatos(){
+    private  ArrayList<Publicacion> listado(){
         ArrayList<Publicacion> mascotas = new ArrayList<>();
         mascotas.add(new Publicacion(R.drawable.dog1));
         mascotas.add(new Publicacion(R.drawable.dog10));

@@ -37,7 +37,7 @@ public class PublicacionAdaptador extends RecyclerView.Adapter<PublicacionAdapta
     @Override
     public void onBindViewHolder(@NonNull ViewHolderPublicacion viewHolderPublicacion, int position) {
 
-        Glide.with(context).load(listPublicacion.get(position).getFoto()).into(viewHolderPublicacion.imgMascotas);
+        ///lide.with(context).load(listPublicacion.get(position).getFoto()).into(viewHolderPublicacion.imgMascotas);
 
         viewHolderPublicacion.imgMascotas.setImageResource(listPublicacion.get(position).getImagenes());
 

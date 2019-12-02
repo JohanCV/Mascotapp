@@ -44,7 +44,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class CrearPublicacionActivity extends AppCompatActivity {
-    String url = "http://gohan1992.pythonanywhere.com/";
+    String url = "http://127.0.0.1/";
     private ImageView regresar;
     private TextView nombreCabecera;
 
@@ -218,9 +218,6 @@ public class CrearPublicacionActivity extends AppCompatActivity {
         intent.setShowCamera(true);
         intent.setShowGif(true);
         intent.setMultiChoose(true);
-        //https://github.com/wangeason/MultiPhotoPicker
-        //https://github.com/nileshpambhar/MultiPhotoPicker
-        //startActivityForResult(intent, REQUEST_CODE);
     }
 
     public void SubirFoto(){
@@ -244,7 +241,6 @@ public class CrearPublicacionActivity extends AppCompatActivity {
                 Log.e("Codigo ", response.body().toString() + "");
                 switch (response.code()) {
                     case 201:
-                        Log.e("Foto Firulais", "Siii lo logre");
                         break;
                 }
             }
