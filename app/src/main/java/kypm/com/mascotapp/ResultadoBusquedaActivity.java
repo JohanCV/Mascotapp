@@ -11,10 +11,14 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
+
+import java.util.ArrayList;
+
+import kypm.com.mascotapp.adaptador.ResultadosAdaptador;
+import kypm.com.mascotapp.modelo.Mascota;
 
 public class ResultadoBusquedaActivity extends AppCompatActivity {
 
@@ -22,10 +26,12 @@ public class ResultadoBusquedaActivity extends AppCompatActivity {
     private TextView nombreCabecera;
 
     TextView recuperarnombreImg;
-
     Bundle parametros;
-
+    String nombre_Imagen_recibida;
     ImageView iv;
+
+    ListView lvDog;
+    ResultadosAdaptador resultadosAdaptador;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,10 +51,14 @@ public class ResultadoBusquedaActivity extends AppCompatActivity {
 
         recuperarnombreImg = findViewById(R.id.txt_nombreimg);
 
-        iv = findViewById(R.id.imageViewDog);
+
+
+        lvDog = findViewById(R.id.lvDogs);
+
     }
 
     private void eventos() {
+
 
         regresar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,17 +71,10 @@ public class ResultadoBusquedaActivity extends AppCompatActivity {
 
         nombreCabecera.setText("Resultados");
 
-        if(parametros != null) {
-            String inicio= "R.drawable.";
-            String nombre_Imagen_recibida = parametros.getString("sendNombreImagen");
-            int find_point = nombre_Imagen_recibida.indexOf(".");
-            String nom_img_sinjpg = nombre_Imagen_recibida.substring(0,find_point);
-            String completo = inicio+nom_img_sinjpg;
-            recuperarnombreImg.setText(completo);
+        resultadosAdaptador = new ResultadosAdaptador(getApplicationContext(),data(getNombre()));
+        lvDog.setAdapter(resultadosAdaptador);
 
-            String intTostringDireccion;
-
-            int[] flags_img = new int[]{
+            /*int[] flags_img = new int[]{
                     R.drawable.dog100,
                     R.drawable.dog4,
             };
@@ -83,10 +86,10 @@ public class ResultadoBusquedaActivity extends AppCompatActivity {
                 Log.e("intTostringDireccion: ", intTostringDireccion);
                 Log.e("completo: ",completo);
                 if (completo.equals(intTostringDireccion)){
-                    iv.setImageResource(Integer.parseInt(completo));
+                    //iv.setImageResource(Integer.parseInt(completo));
                 }
             }
-
+            iv.setBackgroundResource(Integer.parseInt(completo));*/
             /*Drawable image  = ContextCompat.getDrawable(getApplicationContext(), R.drawable.dog100);
             String uri = "@drawable/"+nombre_Imagen_recibida;
             Log.e("nombre img", uri);
@@ -94,7 +97,43 @@ public class ResultadoBusquedaActivity extends AppCompatActivity {
             //Drawable imagen = ContextCompat.getDrawable(getApplicationContext(), imageResource);
 
             //iv.setImageResource(R.drawable.dog4);
+
+
+    }
+
+    private ArrayList<Mascota> data(String nombre) {
+        ArrayList<Mascota> mascotas = new ArrayList<>();
+//        mascotas.add(new Mascota(R.drawable.dog4));
+//        mascotas.add(new Mascota(R.drawable.dog43));
+
+        switch (nombre) {
+            case "dog100.jpg":
+                mascotas.add(new Mascota(R.drawable.dog90));
+                mascotas.add(new Mascota(R.drawable.dog10));
+
+                break;
+            case "dog4.jpg":
+                mascotas.add(new Mascota(R.drawable.dog4));
+                mascotas.add(new Mascota(R.drawable.dog43));
+                break;
+
         }
 
+
+
+        return mascotas;
+    }
+
+    private String getNombre(){
+        if (parametros != null) {
+            String inicio = "R.drawable.";
+            nombre_Imagen_recibida = parametros.getString("sendNombreImagen");
+
+            int find_point = nombre_Imagen_recibida.indexOf(".");
+            String nom_img_sinjpg = nombre_Imagen_recibida.substring(0, find_point);
+            String completo = inicio + nom_img_sinjpg;
+            recuperarnombreImg.setText(completo);
+        }
+        return nombre_Imagen_recibida;
     }
 }

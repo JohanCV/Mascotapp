@@ -2,20 +2,19 @@ package kypm.com.mascotapp.modelo;
 
 public class Mascota {
 
-    String foto;
+    private int foto;
 
-    public Mascota(String foto) {
+    public Mascota(int foto) {
         this.foto = foto;
     }
 
-    public String getFoto() {
+    public int getFoto() {
         return foto;
     }
 
-    public void setFoto(String foto) {
+    public void setFoto(int foto) {
         this.foto = foto;
     }
-
 
     /*String nombre;
     String raza;
