@@ -19,4 +19,6 @@ public interface Servicios {
     @Multipart
     @POST("/servicios/foto_mascota/")
     Call<ResponseBody> subirFoto(@Part MultipartBody.Part image, @Part("mascota") RequestBody mascota);
+    @POST("/servicios/foto_dog/")
+    Call<Publicacion> subirFotos();
 }

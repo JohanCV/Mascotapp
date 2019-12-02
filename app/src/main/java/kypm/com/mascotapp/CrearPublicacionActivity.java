@@ -47,31 +47,11 @@ public class CrearPublicacionActivity extends AppCompatActivity {
     String url = "http://gohan1992.pythonanywhere.com/";
     private ImageView regresar;
     private TextView nombreCabecera;
-    private CheckBox chk_recompensa;
-    private EditText txt_recompensa;
-    private EditText txt_Fecha_perdida;
-    private static final String CERO = "0";
-    private static final String BARRA = "-";
-    //Calendario
-    private  Calendar calendar;
-    private int mes;
-    private int dia;
-    private int anio;
-    private ImageButton ib_ObtenerFecha;
 
     private Button btn_publicar;
-    private Spinner spinner;
-    private ImageView mapa;
     private ImageButton agregarfotos;
     Uri selectedImage;
-
-    private int posicion;
-    private static final int PICK_IMAGE = 100;
-
-    List<Mascota> mascotas;
-    private Bundle datosmapa;
-    private Double latitud,longitud;
-
+    Publicacion mascotas;
     TextView nombreImagen;
 
     public CrearPublicacionActivity() {
@@ -110,53 +90,20 @@ public class CrearPublicacionActivity extends AppCompatActivity {
         });
 
         nombreCabecera.setText("Buscar");
-        habilitar_recompensa();
-        Listar_mascota_usuario();
-
-
-        /*ib_ObtenerFecha.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                obtenerFecha();
-            }
-        });*/
 
         btn_publicar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 Crear_publicacion();
-
             }
         });
 
-        /*
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                posicion = i;
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-                // No seleccionaron nada
-            }
-        });
-        /*mapa.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //Intent intentmapa = new Intent(getApplicationContext(), MapaActivity.class);
-                //startActivityForResult(intentmapa,2);
-            }
-        });
-        */
         agregarfotos.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 AlertDialog.Builder myAlertDialog = new AlertDialog.Builder(
                         CrearPublicacionActivity.this);
                 myAlertDialog.setTitle("Agregar foto");
-                //myAlertDialog.setMessage("¿Cómo quieres configurar tu imagen?");
 
                 myAlertDialog.setPositiveButton("Galería",
                         new DialogInterface.OnClickListener() {
@@ -193,30 +140,22 @@ public class CrearPublicacionActivity extends AppCompatActivity {
         File file = new File(getRealPathFromURI(selectedImage));
         String nombreImg = file.getName().toString();
 
-        // Obtiene el Nombre y el Directorio Absoluto y los Muestra
-        //nombreImagen.setText("Nombre: " + file.getName()+ "Dir. Absoluto: " + file.getAbsolutePath());
         nombreImagen.setText("Nombre: " + nombreImg);
 
         Intent BuscarHome = new Intent(getApplicationContext(), ResultadoBusquedaActivity.class);
         BuscarHome.putExtra("sendNombreImagen",nombreImg);
-        //setResult(Activity.RESULT_OK,BuscarHome);
-        //finish();
+
         startActivity(BuscarHome);
 
-        /*Retrofit retrofit = new Retrofit.Builder()
+        Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(url)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
-        Servicios serviciopublicacion = retrofit.create(Servicios.class);
+        Servicios subirImagen = retrofit.create(Servicios.class);
 
-        Call<Publicacion> registrar_publicacion = serviciopublicacion.subirFoto(
-                Double.parseDouble(txt_recompensa.getText().toString()),
-                txt_Fecha_perdida.getText().toString(),
-                mascotas.get(posicion).getFoto(),
-                latitud,
-                longitud);
+        Call<Publicacion> buscarDog_byImg = subirImagen.subirFotos();
 
-        registrar_publicacion.enqueue(new Callback<Publicacion>() {
+        buscarDog_byImg.enqueue(new Callback<Publicacion>() {
             @Override
             public void onResponse(Call<Publicacion> call, Response<Publicacion> response) {
                 switch (response.code()) {
@@ -234,39 +173,10 @@ public class CrearPublicacionActivity extends AppCompatActivity {
             public void onFailure(Call<Publicacion> call, Throwable t) {
                 Log.e("Error publicacion", t.getMessage());
             }
-        });*/
+        });
     }
 
-    private void obtenerFecha() {
-        calendar = Calendar.getInstance();
-        anio = calendar.get(Calendar.YEAR);
-        mes = calendar.get(Calendar.MONTH);
-        dia = calendar.get(Calendar.DAY_OF_MONTH);
 
-        DatePickerDialog recogerFecha = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker view, int dia, int mes, int anio) {
-               //Esta variable lo que realiza es aumentar en uno el mes ya que comienza desde 0 = enero
-                /*final int mesActual = mes + 1;
-                //Formateo el día obtenido: antepone el 0 si son menores de 10
-                String diaFormateado = (dia < 10) ? CERO + String.valueOf(dia) : String.valueOf(dia);
-                //Formateo el mes obtenido: antepone el 0 si son menores de 10
-                String mesFormateado = (mesActual < 10) ? CERO + String.valueOf(mesActual) : String.valueOf(mesActual);
-                //Muestro la fecha con el formato deseado
-
-                txt_Fecha_perdida.setText(diaFormateado + BARRA + mesFormateado + BARRA + anio);*/
-                txt_Fecha_perdida.setText(dia+"/"+(mes+1)+"/"+anio);
-
-            }
-            //Estos valores deben ir en ese orden, de lo contrario no mostrara la fecha actual
-            /**
-             *También puede cargar los valores que usted desee
-             */
-        }, anio,mes,dia);
-        //Muestro el widget
-        recogerFecha.getDatePicker().setMaxDate(System.currentTimeMillis());
-        recogerFecha.show();
-    }
 
     private void Listar_mascota_usuario() {
         /*Retrofit retrofit = new Retrofit.Builder()
@@ -345,22 +255,7 @@ public class CrearPublicacionActivity extends AppCompatActivity {
         });
     }
 
-    public void habilitar_recompensa() {
-        /*
-        chk_recompensa.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //is chkIos checked?
-                if (((CheckBox) v).isChecked()) {
-                    txt_recompensa.setEnabled(true);
-                    txt_recompensa.requestFocus();
-                } else {
-                    txt_recompensa.setEnabled(false);
-                    txt_recompensa.setText("");
-                }
-            }
-        });*/
-    }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -369,15 +264,6 @@ public class CrearPublicacionActivity extends AppCompatActivity {
             selectedImage = data.getData();
             agregarfotos.setImageURI(selectedImage);
         }
-        /*if (requestCode == 2) {
-            if(resultCode == MapaActivity.RESULT_OK){
-                latitud=data.getDoubleExtra("latitud",0);
-                longitud=data.getDoubleExtra("longitud", 0);
-            }
-            if (resultCode == MapaActivity.RESULT_CANCELED) {
-                //Write your code if there's no result
-            }
-        }*/
     }
     private String getRealPathFromURI(Uri contentUri) {
         String[] proj = {MediaStore.Images.Media.DATA};

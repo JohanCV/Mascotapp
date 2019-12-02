@@ -19,17 +19,20 @@ import java.util.ArrayList;
 
 import kypm.com.mascotapp.adaptador.ResultadosAdaptador;
 import kypm.com.mascotapp.modelo.Mascota;
+import kypm.com.mascotapp.modelo.Publicacion;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ResultadoBusquedaActivity extends AppCompatActivity {
-
+    String url = "http://gohan1992.pythonanywhere.com/";
     private ImageView regresar;
-    private TextView nombreCabecera;
+    private TextView nombreCabecera,resul;
 
-    TextView recuperarnombreImg;
     Bundle parametros;
     String nombre_Imagen_recibida;
-    ImageView iv;
-
     ListView lvDog;
     ResultadosAdaptador resultadosAdaptador;
 
@@ -43,23 +46,45 @@ public class ResultadoBusquedaActivity extends AppCompatActivity {
         findElemente();
         eventos();
 
+        resultados();
+
     }
 
     private void findElemente() {
         regresar =(ImageView) findViewById(R.id.regresarPerfilEditar);
         nombreCabecera = (TextView) findViewById(R.id.perfilUsuarioNombreEditar);
-
-        recuperarnombreImg = findViewById(R.id.txt_nombreimg);
-
-
-
+        resul = findViewById(R.id.textViewResul);
         lvDog = findViewById(R.id.lvDogs);
-
     }
 
+    private void resultados(){
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(url)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        Servicios subirImagen = retrofit.create(Servicios.class);
+
+        Call<Publicacion> buscarDog_byImg = subirImagen.subirFotos();
+
+        buscarDog_byImg.enqueue(new Callback<Publicacion>() {
+            @Override
+            public void onResponse(Call<Publicacion> call, Response<Publicacion> response) {
+                switch (response.code()) {
+                    case 201:
+                        Publicacion p = response.body();
+                        break;
+                    default:
+                        Log.e("errorp", "" + response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Publicacion> call, Throwable t) {
+                Log.e("Error publicacion", t.getMessage());
+            }
+        });
+    }
     private void eventos() {
-
-
         regresar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -103,9 +128,6 @@ public class ResultadoBusquedaActivity extends AppCompatActivity {
 
     private ArrayList<Mascota> data(String nombre) {
         ArrayList<Mascota> mascotas = new ArrayList<>();
-//        mascotas.add(new Mascota(R.drawable.dog4));
-//        mascotas.add(new Mascota(R.drawable.dog43));
-
         switch (nombre) {
             case "dog100.jpg":
                 mascotas.add(new Mascota(R.drawable.dog90));
@@ -117,9 +139,11 @@ public class ResultadoBusquedaActivity extends AppCompatActivity {
                 mascotas.add(new Mascota(R.drawable.dog43));
                 break;
 
+
+                default: resul.setText("No hay ningun Parecido");
+                break;
+
         }
-
-
 
         return mascotas;
     }
@@ -132,7 +156,6 @@ public class ResultadoBusquedaActivity extends AppCompatActivity {
             int find_point = nombre_Imagen_recibida.indexOf(".");
             String nom_img_sinjpg = nombre_Imagen_recibida.substring(0, find_point);
             String completo = inicio + nom_img_sinjpg;
-            recuperarnombreImg.setText(completo);
         }
         return nombre_Imagen_recibida;
     }

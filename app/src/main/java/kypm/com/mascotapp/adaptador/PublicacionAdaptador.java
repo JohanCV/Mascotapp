@@ -39,6 +39,8 @@ public class PublicacionAdaptador extends RecyclerView.Adapter<PublicacionAdapta
 
         Glide.with(context).load(listPublicacion.get(position).getFoto()).into(viewHolderPublicacion.imgMascotas);
 
+        viewHolderPublicacion.imgMascotas.setImageResource(listPublicacion.get(position).getImagenes());
+
     }
 
     @Override

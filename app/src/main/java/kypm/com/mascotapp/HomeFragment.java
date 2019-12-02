@@ -21,6 +21,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import kypm.com.mascotapp.adaptador.PublicacionAdaptador;
+import kypm.com.mascotapp.modelo.Mascota;
 import kypm.com.mascotapp.modelo.Publicacion;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -38,9 +39,6 @@ public class HomeFragment extends Fragment {
 
     private FloatingActionButton floatingActionButton;
 
-
-
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -49,41 +47,10 @@ public class HomeFragment extends Fragment {
         recyclerView = view.findViewById(R.id.rv_publicaciones);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        //llenarListaBaseDatos();
+        llenarListaBaseDatos();
 
-        //publicacionAdaptador = new PublicacionAdaptador(getContext(),listFotos);
-        //recyclerView.setAdapter(publicacionAdaptador);
-
-
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(url)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        Servicios servicioListarFotos = retrofit.create(Servicios.class);
-        Call<List<Publicacion>> call = servicioListarFotos.listarFotos();
-
-        call.enqueue(new Callback<List<Publicacion>>() {
-                         @Override
-                         public void onResponse(Call<List<Publicacion>> call, Response<List<Publicacion>> response) {
-                             Log.e("Codigo: ", response.code() + "");
-
-                             switch (response.code()) {
-                                 case 200:
-
-                                     List<Publicacion> publicaciones = response.body();
-                                     publicacionAdaptador = new PublicacionAdaptador(getContext(),publicaciones);
-                                     recyclerView.setAdapter(publicacionAdaptador);
-
-                                     break;
-                             }
-                         }
-
-                         @Override
-                         public void onFailure(Call<List<Publicacion>> call, Throwable t) {
-                             Log.e("Error App: ", t.getMessage());
-                         }
-                     });
+        publicacionAdaptador = new PublicacionAdaptador(getContext(),llenarListaBaseDatos());
+        recyclerView.setAdapter(publicacionAdaptador);
 
         floatingActionButton = view.findViewById(R.id.floatingActionButtonPublicar);
 
@@ -94,37 +61,35 @@ public class HomeFragment extends Fragment {
     }
 
     private void coneccion() {
-        /*Retrofit retrofit = new Retrofit.Builder()
+        Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(url)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
-        ServicioPublicacion servicioPublicacion =retrofit.create(ServicioPublicacion.class);
-        Call<List<Publicacion>> call =servicioPublicacion.listarPublicacion();
+        Servicios servicioListarFotos = retrofit.create(Servicios.class);
+        Call<List<Publicacion>> call = servicioListarFotos.listarFotos();
 
         call.enqueue(new Callback<List<Publicacion>>() {
             @Override
             public void onResponse(Call<List<Publicacion>> call, Response<List<Publicacion>> response) {
-                switch (response.code()){
+                Log.e("Codigo: ", response.code() + "");
+
+                switch (response.code()) {
                     case 200:
+
                         List<Publicacion> publicaciones = response.body();
-                        publicacionAdaptador = new PublicacionAdaptador(getContext(),publicaciones);
-                        recyclerView.setAdapter(publicacionAdaptador);
-                        for(Publicacion p : publicaciones){
-                            Log.d("mascota", p.getRecompensa()+"");
-                            Log.d("mascota", p.getFecha_perdida()+"");
-                            Log.d("mascota", p.getLatitud_perdida()+"");
-                            Log.d("mascota", p.getLongitud_perdida()+"");
-                        }
+                        //publicacionAdaptador = new PublicacionAdaptador(getContext(),publicaciones);
+                        //recyclerView.setAdapter(publicacionAdaptador);
+
                         break;
                 }
             }
 
             @Override
             public void onFailure(Call<List<Publicacion>> call, Throwable t) {
-
+                Log.e("Error App: ", t.getMessage());
             }
-        });*/
+        });
     }
 
     private void events(){
@@ -144,11 +109,21 @@ public class HomeFragment extends Fragment {
 
     }
 
-    private void llenarListaBaseDatos(){
-        /*listPublish.add(new Publicacion("Firulais","22/06/19","husky-siberiano","999888111",R.drawable.ic_menu_mascota));
+    private  ArrayList<Publicacion> llenarListaBaseDatos(){
+        ArrayList<Publicacion> mascotas = new ArrayList<>();
+        mascotas.add(new Publicacion(R.drawable.dog1));
+        mascotas.add(new Publicacion(R.drawable.dog10));
+        mascotas.add(new Publicacion(R.drawable.dog100));
+        mascotas.add(new Publicacion(R.drawable.dog13));
+        mascotas.add(new Publicacion(R.drawable.dog600));
+        mascotas.add(new Publicacion(R.drawable.dog12));
+        mascotas.add(new Publicacion(R.drawable.dog110));
+        mascotas.add(new Publicacion(R.drawable.dog18));
+        mascotas.add(new Publicacion(R.drawable.dog19));
+        mascotas.add(new Publicacion(R.drawable.dog187));
+        mascotas.add(new Publicacion(R.drawable.dog102));
 
-        listPublish.add(new Publicacion("Firulais","22/06/19","Rodwaller","999888111",R.drawable.ic_menu_mascota));
-        listPublish.add(new Publicacion("Firulais","22/06/19","pequines","999888111",R.drawable.ic_menu_mascota));*/
+        return mascotas;
     }
 
 }

@@ -10,6 +10,7 @@ public class Publicacion {
     Float precio_hora;
     int cantidad_canchas;
     String foto;
+    int imagenes;
 
     public Publicacion(int id, String nombre, String direccion, Float precio_hora, int cantidad_canchas,String foto) {
         this.id = id;
@@ -18,6 +19,10 @@ public class Publicacion {
         this.precio_hora = precio_hora;
         this.cantidad_canchas = cantidad_canchas;
         this.foto=foto;
+    }
+
+    public Publicacion(int imagenes) {
+        this.imagenes = imagenes;
     }
 
     public int getId() {
@@ -68,5 +73,11 @@ public class Publicacion {
         this.foto = foto;
     }
 
+    public int getImagenes() {
+        return imagenes;
+    }
 
+    public void setImagenes(int imagenes) {
+        this.imagenes = imagenes;
+    }
 }
